@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: app-01
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - namespace: staging
+          - namespace: production
+  template:
+    metadata:
+      name: "{{`{{namespace}}`}}-app-01"
+    spec:
+      project: "{{`{{namespace}}`}}"
+      source:
+        repoURL: { { .Values.spec.source.repoURL } }
+        targetRevision: HEAD
+        path: kustomize/app-01/overlays/{{`{{namespace}}`}}
+      destination:
+        server: { { .Values.spec.destination.server } }
+        namespace: "{{`{{namespace}}`}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+
+        retry:
+          limit: 3

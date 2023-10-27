@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: production
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: production
+  namespace: argocd
+spec:
+  description: Contains all production applications.
+  sourceRepos:
+    - https://github.com/rceraline/devops-argocd.git
+  destinations:
+    - namespace: production
+      server: https://kubernetes.default.svc

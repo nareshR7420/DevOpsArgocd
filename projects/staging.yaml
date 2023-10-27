@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: staging
+  labels:
+    name: staging
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: staging
+  namespace: argocd
+spec:
+  description: Contains all staging applications.
+  sourceRepos:
+    - https://github.com/rceraline/devops-argocd.git
+  destinations:
+    - namespace: staging
+      server: https://kubernetes.default.svc

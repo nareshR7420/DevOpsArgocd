@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: app-01
-          image: crj5yn5abgxaivw.azurecr.io/app-01:57
+          image: crj5yn5abgxaivw.azurecr.io/app-01:58
           ports:
             - containerPort: 80
           resources:

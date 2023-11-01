@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: projects
+  namespace: argocd
+  spec:
+    project: default
+    source:
+      repoURL: "{{ .Values.spec.source.repoURL }}"
+      targetRevision: HEAD
+      path: projects
+    destination:
+      server: "{{ .Values.spec.destination.server }}"
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+
+      retry:
+        limit: 3
